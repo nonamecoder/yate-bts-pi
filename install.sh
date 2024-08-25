@@ -18,7 +18,7 @@ major_version=$(echo $gcc_version | cut -d. -f1)
 
 # Install dependencies
 sudo apt update
-sudo apt install -y install libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
+sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
 read -p "Press Enter to continue...1"
 
 # Check if the major version is 12 or higher and set the variable accordingly
