@@ -54,7 +54,9 @@ read -p "Press Enter to continue...3"
 # Install bladeRF
 cd "$script_path"
 git clone https://github.com/Nuand/bladeRF.git ./bladeRF
-cd ./bladeRF/host/
+cd ./bladeRF
+git submodule update --init --recursive
+cd host/
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
