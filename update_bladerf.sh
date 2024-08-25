@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p bladeRF_firmware
+cd bladeRF_firmware
+
 wget -O hostedxA4-latest.rbf https://www.nuand.com/fpga/hostedxA4-latest.rbf
 wget -O bladeRF_fw_latest.img https://www.nuand.com/fx3/bladeRF_fw_latest.img
 
@@ -15,4 +18,5 @@ else
     echo "Firmware file is not present"
 fi
 
+cd ..
 read -p "Reconnect the bladeRF and press Enter to continue..."

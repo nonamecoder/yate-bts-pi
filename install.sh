@@ -52,7 +52,7 @@ echo "udev rules reloaded successfully."
 cd $script_path
 git clone https://github.com/Nuand/bladeRF.git ./bladeRF
 cd bladeRF/host/
-mkdir build
+mkdir -p build
 cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
 make
