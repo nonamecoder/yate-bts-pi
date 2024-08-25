@@ -1,0 +1,98 @@
+MCC MNC 2005 update
+
+310-110 Wireless 2000 PCS
+310-020 Union Telephone
+310-260 T-Mobile
+310-030 Centennial
+310-310 T-Mobile
+310-040 Concho Wireless
+310-460 Simmetry
+310-070 Highland Cellular
+310-080 Corr Wireless
+310-090 Edge Wireless
+310-100 Plateau Wireless
+310-170 T-Mobile (former Cingular Wireless CA/NV)
+310-180 West Central
+310-190 Alaska Wireless
+310-320 Cellular One (not Dobson)
+310-340 WestLink
+310-390 Yorkville
+310-410 Cingular Wireless
+310-420 Cincinnati Bell
+310-430 Alaska DigiTel
+310-440 Cellular One (not Dobson)
+310-450 Viaero Wireless
+310-460 Simmetry (formerly OneLink PCS)
+310-490 SunCom
+310-500 Alltel (formerly PSC Wireless - GA/AL region only)
+310-530 West VA Wireless
+310-540 Oklahoma Western
+310-560 Cellular One DCS
+310-590 Western Wireless (now part of Alltel)
+310-610 Epic Touch
+310-620 Coleman Telecomm
+310-630 AmeriLink PCS
+310-640 Einstein PCS
+310-680 Cellular One DCS (Dobson. Formerly NPI Wireless)
+310-690 Immix Wireless
+310-740 Telemetrix
+310-760 Panhandle Telecomm
+310-770 Iowa Wireless
+310-790 PinPoint Wireless
+310-830 Caprock Cellular
+310-870 Kaplan
+310-880 Advantage Cellular
+310-890 RCC/Unicell
+310-900 Texas Cellular
+310-910 First Cellular
+310-940 Digital Cellular
+310-950 XIT Wireless
+310-980 Cingular Wireless (not in commercial use)
+310-990 Cingular Wireless (not in commercial use)
+311-000 Mid-Tex Cellular
+311-030 Indigo Wireless
+311-040 Commnet Wireless
+311-050 Wilkes Cellular
+311-070 Easterbrooke
+311-080 Pine Cellular
+311-090 Siouxland PCS 
+311-110 High Plains Wireless
+311-130 Cell One Amarillo
+311-140 Sprocket (aka MBO Wireless)
+311-150 Wilkes Cellular
+311-160 Cellular One DCS (Dobson. Formerly EMW)
+311-170 PetroCom
+311-180 Cingular Wireless (not in commercial use)
+311-190 Cellular Properties Inc. (aka CellOne East Central IL)
+311-210 Farmers Cellular
+311-250 USA i CAN
+
+
+
+==== RETIRED ====
+
+310-110 Wireless 2000 PCS (No longer in business)
+310-150 Cingular Wireless (SE GA/SC/NC/E TN. Consolidated with 310-410)
+310-160 T-Mobile (consolidated with 310-260. Formerly Omnipoint)
+310-200 T-Mobile (consolidated with 310-260)
+310-210 T-Mobile (consolidated with 310-260)
+310-220 T-Mobile (consolidated with 310-260)
+310-230 T-Mobile (consolidated with 310-260)
+310-240 T-Mobile (consolidated with 310-260)
+310-250 T-Mobile (consolidated with 310-260)
+310-260 T-Mobile (consolidated with 310-260)
+310-270 T-Mobile (consolidated with 310-260. Former Powertel)
+310-310 T-Mobile (consolidated with 310-260. Former Aerial)
+310-350 Carolina Phone (No longer in business)
+310-380 Cingular Wireless (former AT&T Wireless)
+310-400 Minnesota Souther (never actually used;
+        HickoryTech got the MNC but never built out any GSM before their
+        wireless business was bought by Western Wireless; WWCA built out
+        (roamer-only) GSM under -590 and not -400)
+310-580 T-Mobile (consolidated with 310-260. Former PCS One)
+310-660 T-Mobile (consolidated with 310-260. Former DigiPH)
+310-670 Wireless 2000 PCS (No longer in business)
+310-780 AirLink PCS (No longer in business)
+310-800 T-Mobile (consolidated with 310-260)
+
+Most of the Tracfone handsets are locked to a MNC-MCC of 310-999
