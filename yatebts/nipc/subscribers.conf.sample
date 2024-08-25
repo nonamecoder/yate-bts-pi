@@ -5,9 +5,9 @@
 [general]
 ; Your Country code (where YateBTS is installed)
 ; Ex: 1 for US, 44 for UK
-;country_code=
+country_code=1
 
-; Subscribers are accepted by either matching the IMSI against this configured 
+; Subscribers are accepted by either matching the IMSI against this configured
 ; regular expression or by setting subscribers individually
 ; Note! If a regular expression is used, 2G/3G authentication cannot be used.
 ; Ex: regexp=^001
@@ -22,7 +22,7 @@ regexp=^310260
 ;gw_sos=
 
 
-; you have to put subscriber IMSI as a category and the subscriber parameters 
+; you have to put subscriber IMSI as a category and the subscriber parameters
 ; as keys
 
 ;[001990010001014]
@@ -36,7 +36,7 @@ regexp=^310260
 ; Card secret. Set or generated when SIMs are written
 ; Ex:ki=00112233445566778899aabbccddeeff
 
-; Operator secret. 
+; Operator secret.
 ; Allowed values: empty for 2G IMSIs, 00000000000000000000000000000000 for 3G IMSIs.
 ; Ex: op=00000000000000000000000000000000
 

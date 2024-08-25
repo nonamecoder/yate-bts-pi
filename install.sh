@@ -78,43 +78,37 @@ make
 sudo make install
 sudo ldconfig
 
-read -p "Press Enter to continue...7"
-
 sudo touch /usr/local/etc/yate/snmp_data.conf /usr/local/etc/yate/tmsidata.conf
 
 sudo chown root:yate /usr/local/etc/yate/*.conf
 sudo chmod g+w /usr/local/etc/yate/*.conf
 
-read -p "Press Enter to continue...8"
-
 # Set high exec priority for yate group
 echo "@yate hard nice -20" | sudo tee -a /etc/security/limits.conf
 echo "@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
-read -p "Press Enter to continue...9"
-
 # Install Yate web application
 read -p "Do you want to install NiPC web application with dependencies(Apache2 + php5.6)? (y/n): " install_webapp
 if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
-  sudo apt install -y apt-transport-https lsb-release ca-certificates wget apache2
   sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
   sudo apt update
-  sudo apt install php5.6
+  sudo apt install -y apt-transport-https lsb-release ca-certificates wget apache2 php5.6
   sudo chmod -R a+rw /usr/local/etc/yate/
   ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
   sudo service apache2 restart
   echo "Apache2 + PHP5.6 installed successfully, NiPC web application has been installed."
+fi
 
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
 if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
-    sudo apt install --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
+    sudo apt install -y --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
     cd $script_path
     git clone https://github.com/osmocom/pysim.git
     cd ./pysim
     pip3 install --user -r requirements.txt
     echo "pySim has been installed successfully."
-    echo "Here is example usage of pySim:"
+    echo "Here is example usage of pySim (can be used to program your first SIM):"
     echo "./pySim-prog.py -p 0 -n YateBTS -c 1 -x 310 -y 260 -i 310260000000551 -s 8912600000000005512 -o 659BDA03311ACBBE767CB56D565A58D6 -k BA351F5C4690491D86377319E5A6DBCC"
 fi
 
