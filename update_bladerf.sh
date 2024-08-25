@@ -14,3 +14,5 @@ if [ -f "hostedxA4-latest.rbf" ]; then
 else
     echo "Firmware file is not present"
 fi
+
+read -p "Reconnect the bladeRF and press Enter to continue..."

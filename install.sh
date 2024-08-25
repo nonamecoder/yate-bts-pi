@@ -19,7 +19,6 @@ major_version=$(echo $gcc_version | cut -d. -f1)
 # Install dependencies
 sudo apt update
 sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
-read -p "Press Enter to continue...1"
 
 # Check if the major version is 12 or higher and set the variable accordingly
 if [ "$major_version" -ge 12 ]; then
@@ -35,7 +34,6 @@ else
     echo "GCC version is $gcc_version"
     echo "GCC version is less than 12, no action required."
 fi
-read -p "Press Enter to continue...2"
 
 # Setup yate group
 sudo groupadd yate
@@ -49,14 +47,11 @@ echo "Rules have been added to $rules_file"
 # Reload udev rules
 sudo udevadm control --reload-rules && sudo udevadm trigger
 echo "udev rules reloaded successfully."
-read -p "Press Enter to continue...3"
 
 # Install bladeRF
 cd $script_path
 git clone https://github.com/Nuand/bladeRF.git ./bladeRF
-cd bladeRF/
-git submodule update --init --recursive
-cd host/
+cd bladeRF/host/
 mkdir build
 cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
@@ -64,13 +59,9 @@ make
 sudo make install
 sudo ldconfig
 
-read -p "Press Enter to continue...4"
-
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
 sudo $script_path/update_bladerf.sh
-
-read -p "Press Enter to continue...5"
 
 # Install Yate and YateBTS
 cd $script_path/yate
@@ -78,9 +69,7 @@ cd $script_path/yate
 ./configure --prefix="$install_prefix"
 make
 sudo make install-noapi
-ldconfig
-
-read -p "Press Enter to continue...6"
+sudo ldconfig
 
 cd $script_path/yatebts
 ./autogen.sh
