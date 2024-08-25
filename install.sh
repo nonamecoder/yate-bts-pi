@@ -42,8 +42,8 @@ sudo groupadd yate
 sudo usermod -a -G yate $username
 
 # Setup bladeRF udev rules
-echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee -a '$rules_file'
-echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee -a '$rules_file'
+echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee -a $rules_file
+echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee -a $rules_file
 echo "Rules have been added to $rules_file"
 
 # Reload udev rules
@@ -52,13 +52,13 @@ echo "udev rules reloaded successfully."
 read -p "Press Enter to continue...3"
 
 # Install bladeRF
-cd "$script_path"
+cd $script_path
 git clone https://github.com/Nuand/bladeRF.git ./bladeRF
-cd ./bladeRF
+cd bladeRF/
 git submodule update --init --recursive
 cd host/
 mkdir build
-cd build
+cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
 make
 sudo make install
@@ -68,12 +68,12 @@ read -p "Press Enter to continue...4"
 
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
-sudo "$script_path"/update_bladerf.sh
+sudo $script_path/update_bladerf.sh
 
 read -p "Press Enter to continue...5"
 
 # Install Yate and YateBTS
-cd "$script_path"/yate
+cd $script_path/yate
 ./autogen.sh
 ./configure --prefix="$install_prefix"
 make
@@ -82,7 +82,7 @@ ldconfig
 
 read -p "Press Enter to continue...6"
 
-cd "$script_path"/yatebts
+cd $script_path/yatebts
 ./autogen.sh
 ./configure --prefix="$install_prefix"
 make
@@ -120,7 +120,7 @@ if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
 if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
     sudo apt install --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
-    cd "$script_path"
+    cd $script_path
     git clone https://github.com/osmocom/pysim.git
     cd ./pysim
     pip3 install --user -r requirements.txt
