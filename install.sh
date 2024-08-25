@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Check if the script is run as root
-if [ "$EUID" -ne 0 ]; then
-  echo "This script must be run as root. Please run it with sudo or as the root user."
+# Check if the script is being run as root (user ID 0)
+if [ "$(id -u)" -eq 0 ]; then
+  echo "This script must not be run as root. Please run as a regular user."
   exit 1
 fi
 
@@ -16,7 +16,9 @@ install_prefix="/usr/local"
 gcc_version=$(gcc -dumpversion)
 major_version=$(echo $gcc_version | cut -d. -f1)
 
-apt update
+# Install dependencies
+sudo apt update
+sudo apt install -y install libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
 read -p "Press Enter to continue...1"
 
 # Check if the major version is 12 or higher and set the variable accordingly
@@ -25,8 +27,8 @@ if [ "$major_version" -ge 12 ]; then
     echo "Recommended GCC version is 11 or lower or compilation may fail."
     read -p "Do you want to install gcc-11? (y/n): " continue_install
     if [[ "$continue_install" =~ ^[Yy]$ ]]; then
-        apt install -y gcc-11
-        ln -s -f /usr/bin/gcc-11 /usr/bin/gcc
+        sudo apt install -y gcc-11
+        sudo ln -s -f /usr/bin/gcc-11 /usr/bin/gcc
         echo "GCC-11 has been installed successfully."
     fi
 else
@@ -36,19 +38,16 @@ fi
 read -p "Press Enter to continue...2"
 
 # Setup yate group
-groupadd yate
-usermod -a -G yate $username
-
-# Install dependencies
-apt install -y install libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
+sudo groupadd yate
+sudo usermod -a -G yate $username
 
 # Setup bladeRF udev rules
-echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' >> '$rules_file'
-echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' >> '$rules_file'
+echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee -a '$rules_file'
+echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee -a '$rules_file'
 echo "Rules have been added to $rules_file"
 
 # Reload udev rules
-udevadm control --reload-rules && udevadm trigger
+sudo udevadm control --reload-rules && sudo udevadm trigger
 echo "udev rules reloaded successfully."
 read -p "Press Enter to continue...3"
 
@@ -58,71 +57,71 @@ git clone https://github.com/Nuand/bladeRF.git ./bladeRF
 cd ./bladeRF/host/
 mkdir build
 cd build
-sudo -u "$username" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
-sudo -u "$username" make
-make install
-ldconfig
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
+make
+sudo make install
+sudo ldconfig
 
 read -p "Press Enter to continue...4"
 
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
-"$script_path"/update_bladerf.sh
+sudo "$script_path"/update_bladerf.sh
 
 read -p "Press Enter to continue...5"
 
 # Install Yate and YateBTS
 cd "$script_path"/yate
-sudo -u "$username" ./autogen.sh
-sudo -u "$username" ./configure --prefix="$install_prefix"
-sudo -u "$username" make
-make install-noapi
+./autogen.sh
+./configure --prefix="$install_prefix"
+make
+sudo make install-noapi
 ldconfig
 
 read -p "Press Enter to continue...6"
 
 cd "$script_path"/yatebts
-sudo -u "$username" ./autogen.sh
-sudo -u "$username" ./configure --prefix="$install_prefix"
-sudo -u "$username" make
-make install
-ldconfig
+./autogen.sh
+./configure --prefix="$install_prefix"
+make
+sudo make install
+sudo ldconfig
 
 read -p "Press Enter to continue...7"
 
-touch /usr/local/etc/yate/snmp_data.conf /usr/local/etc/yate/tmsidata.conf
+sudo touch /usr/local/etc/yate/snmp_data.conf /usr/local/etc/yate/tmsidata.conf
 
-chown root:yate /usr/local/etc/yate/*.conf
-chmod g+w /usr/local/etc/yate/*.conf
+sudo chown root:yate /usr/local/etc/yate/*.conf
+sudo chmod g+w /usr/local/etc/yate/*.conf
 
 read -p "Press Enter to continue...8"
 
 # Set high exec priority for yate group
-echo "@yate hard nice -20" >> /etc/security/limits.conf
-echo "@yate hard rtprio 99" >> /etc/security/limits.conf
+echo "@yate hard nice -20" | sudo tee -a /etc/security/limits.conf
+echo "@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
 read -p "Press Enter to continue...9"
 
 # Install Yate web application
 read -p "Do you want to install NiPC web application with dependencies(Apache2 + php5.6)? (y/n): " install_webapp
 if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
-  apt install -y apt-transport-https lsb-release ca-certificates wget apache2
-  wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+  sudo apt install -y apt-transport-https lsb-release ca-certificates wget apache2
+  sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
-  apt update
-  apt install php5.6
-  chmod -R a+rw /usr/local/etc/yate/
+  sudo apt update
+  sudo apt install php5.6
+  sudo chmod -R a+rw /usr/local/etc/yate/
   ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
-  service apache2 restart
+  sudo service apache2 restart
   echo "Apache2 + PHP5.6 installed successfully, NiPC web application has been installed."
 
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
 if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
-    apt install --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
+    sudo apt install --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
     cd "$script_path"
     git clone https://github.com/osmocom/pysim.git
     cd ./pysim
-    sudo -u "$username" pip3 install --user -r requirements.txt
+    pip3 install --user -r requirements.txt
     echo "pySim has been installed successfully."
     echo "Here is example usage of pySim:"
     echo "./pySim-prog.py -p 0 -n YateBTS -c 1 -x 310 -y 260 -i 310260000000551 -s 8912600000000005512 -o 659BDA03311ACBBE767CB56D565A58D6 -k BA351F5C4690491D86377319E5A6DBCC"
