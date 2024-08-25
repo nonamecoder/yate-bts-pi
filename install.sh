@@ -2,7 +2,7 @@
 
 # Check if the script is being run as root (user ID 0)
 if [ "$(id -u)" -eq 0 ]; then
-  echo "This script must not be run as root. Please run as a regular user."
+  echo "This script must not be run as root. Please run it as a regular user."
   exit 1
 fi
 
@@ -22,17 +22,17 @@ sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurs
 
 # Check if the major version is 12 or higher and set the variable accordingly
 if [ "$major_version" -ge 12 ]; then
-    echo "GCC version is $gcc_version"
-    echo "Recommended GCC version is 11 or lower or compilation may fail."
+    echo "GCC version is $gcc_version."
+    echo "The recommended GCC version is 11 or lower, or compilation may fail."
     read -p "Do you want to install gcc-11? (y/n): " continue_install
     if [[ "$continue_install" =~ ^[Yy]$ ]]; then
         sudo apt install -y gcc-11
         sudo ln -s -f /usr/bin/gcc-11 /usr/bin/gcc
-        echo "GCC-11 has been installed successfully."
+        echo "gcc-11 has been installed successfully."
     fi
 else
-    echo "GCC version is $gcc_version"
-    echo "GCC version is less than 12, no action required."
+    echo "GCC version is $gcc_version."
+    echo "GCC version is less than 12; no action is required."
 fi
 
 # Setup yate group
@@ -88,16 +88,16 @@ echo "@yate hard nice -20" | sudo tee -a /etc/security/limits.conf
 echo "@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
 # Install Yate web application
-read -p "Do you want to install NiPC web application with dependencies(Apache2 + php5.6)? (y/n): " install_webapp
+read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP 5.6)? (y/n): " install_webapp
 if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
   sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
   sudo apt update
   sudo apt install -y apt-transport-https lsb-release ca-certificates wget apache2 php5.6
   sudo chmod -R a+rw /usr/local/etc/yate/
-  ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
+  sudo ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
   sudo service apache2 restart
-  echo "Apache2 + PHP5.6 installed successfully, NiPC web application has been installed."
+  echo "Apache2 and PHP 5.6 have been installed successfully, and the NiPC web application has been set up."
 fi
 
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
@@ -108,13 +108,15 @@ if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
     cd ./pysim
     pip3 install --user -r requirements.txt
     echo "pySim has been installed successfully."
-    echo "Here is example usage of pySim (can be used to program your first SIM):"
+    echo "Here is an example usage of pySim (can be used to program your first SIM):"
     echo "./pySim-prog.py -p 0 -n YateBTS -c 1 -x 310 -y 260 -i 310260000000551 -s 8912600000000005512 -o 659BDA03311ACBBE767CB56D565A58D6 -k BA351F5C4690491D86377319E5A6DBCC"
 fi
 
 echo "== Installation has been completed successfully =="
-echo "David's phone number for audio and echo test is 32843"
-echo "Also try to send SMS to Eliza chat bot at 35492"
-echo "To telnet to the YateBTS, use the following command: telnet localhost 5038"
-echo "To start the Yate service, use the following command: sudo yate -s"
-echo "Base config is set for 1900MHz band, MCC=310, MNC=260, IMSI regex starts with 310260"
+echo "David's phone number for audio and echo test is 32843."
+echo "Also, try to send an SMS to the Eliza chatbot at 35492."
+echo "To telnet to the YateBTS, use the following command: telnet localhost 5038."
+echo "To start the Yate service, use the following command: sudo yate -s."
+echo "Base configuration is set for the 1900 MHz band, MCC=310, MNC=260. IMSI regex starts with 310260."
+echo "If you flashed the SIM with the pySim example, your assigned phone number is 10000551."
+echo "If you installed Apache2 and PHP 5.6, you can access the NiPC web application at http://{your_local_IP_or_name}/nipc/main.php."
