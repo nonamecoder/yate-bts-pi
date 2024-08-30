@@ -88,16 +88,14 @@ echo "@yate hard nice -20" | sudo tee -a /etc/security/limits.conf
 echo "@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
 # Install Yate web application
-read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP 5.6)? (y/n): " install_webapp
+read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP)? (y/n): " install_webapp
 if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
-  sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
   sudo apt update
-  sudo apt install -y apt-transport-https lsb-release ca-certificates wget apache2 php5.6
+  sudo apt install -y apache2 php
   sudo chmod -R a+rw /usr/local/etc/yate/
   sudo ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
   sudo service apache2 restart
-  echo "Apache2 and PHP 5.6 have been installed successfully, and the NiPC web application has been set up."
+  echo "Apache2 and PHP have been installed successfully, and the NiPC web application has been set up."
 fi
 
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install

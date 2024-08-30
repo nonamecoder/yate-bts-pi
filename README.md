@@ -8,11 +8,11 @@ Yate 6.4.1 and YateBTS 6.1.1 use the latest bladeRF firmware and FPGA (tested wi
 
 - **Raspberry Pi 5**
 - **bladeRF 2.0 micro xA4**
-- **Raspberry Pi OS Bookworm** (based on Debian 12 Bookworm), **GCC-11**, **Apache2**, **PHP 5.6**
+- **Raspberry Pi OS Bookworm** (based on Debian 12 Bookworm), **GCC-11**, **Apache2**, **PHP 5.6** / **PHP 8.2**
 
 ## Installation Instructions
 
-Clone the repository and run `install.sh` as a user; you will be prompted for your sudo password at some point.  
+Clone the repository and run `install.sh` as a user; you will be prompted for your sudo password at some point.
 Compilation takes approximately 10-15 minutes on a Raspberry Pi 5. The script will install all dependencies, compile sources, and install Apache2 + PHP 5.6 (if you choose the NiPC web interface).
 
 ### Post-Installation Information

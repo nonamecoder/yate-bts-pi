@@ -3758,7 +3758,7 @@ function get_mp3_len($file)
 	$bits = "";
 	while (strlen($header) > 0) {
 		//var_dump($header);
-		$bits .= str_pad(base_convert(ord($header{0}), 10, 2), 8, '0', STR_PAD_LEFT);
+		$bits .= str_pad(base_convert(ord($header[0]), 10, 2), 8, '0', STR_PAD_LEFT);
 		$header = substr($header, 1);
 	}
 
@@ -3784,7 +3784,7 @@ function get_mp3_len($file)
 		$framesize = 1152;
 	}
 
-	$headerlen = 4 + ($bits{4} == 0 ? '2' : '0');
+	$headerlen = 4 + ($bits[4] == '0' ? 2 : 0);
 
 	return (filesize($file) - $headerlen) / $framelen / ($samp / $framesize);
 }
