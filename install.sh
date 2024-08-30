@@ -12,28 +12,9 @@ username=$(id -n -u)
 rules_file="/etc/udev/rules.d/90-yate.rules"
 install_prefix="/usr/local"
 
-# Get GCC version
-gcc_version=$(gcc -dumpversion)
-major_version=$(echo $gcc_version | cut -d. -f1)
-
 # Install dependencies
 sudo apt update
 sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
-
-# Check if the major version is 12 or higher and set the variable accordingly
-if [ "$major_version" -ge 12 ]; then
-    echo "GCC version is $gcc_version."
-    echo "The recommended GCC version is 11 or lower, or compilation may fail."
-    read -p "Do you want to install gcc-11? (y/n): " continue_install
-    if [[ "$continue_install" =~ ^[Yy]$ ]]; then
-        sudo apt install -y gcc-11
-        sudo ln -s -f /usr/bin/gcc-11 /usr/bin/gcc
-        echo "gcc-11 has been installed successfully."
-    fi
-else
-    echo "GCC version is $gcc_version."
-    echo "GCC version is less than 12; no action is required."
-fi
 
 # Setup yate group
 sudo groupadd yate
