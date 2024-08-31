@@ -38,6 +38,7 @@ cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
 make -j$(nproc)
 sudo make install
+sudo ldconfig
 
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
