@@ -36,9 +36,8 @@ cd bladeRF/host/
 mkdir -p build
 cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
-make
+make -j$(nproc)
 sudo make install
-sudo ldconfig
 
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
@@ -48,15 +47,15 @@ sudo $script_path/update_bladerf.sh
 cd $script_path/yate
 ./autogen.sh
 ./configure --prefix="$install_prefix"
-make
+make -j$(nproc)
 sudo make install-noapi
-sudo ldconfig
 
 cd $script_path/yatebts
 ./autogen.sh
 ./configure --prefix="$install_prefix"
-make
+make -j$(nproc)
 sudo make install
+
 sudo ldconfig
 
 sudo touch /usr/local/etc/yate/snmp_data.conf /usr/local/etc/yate/tmsidata.conf
