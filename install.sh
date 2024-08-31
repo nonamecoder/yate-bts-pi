@@ -81,14 +81,8 @@ fi
 
 read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
 if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
-    sudo apt install -y --no-install-recommends pcscd libpcsclite-dev python3 python3-setuptools python3-pycryptodome python3-pyscard python3-pip
-    cd $script_path
-    git clone https://github.com/osmocom/pysim.git
-    cd ./pysim
-    pip3 install --user -r requirements.txt
-    echo "pySim has been installed successfully."
-    echo "Here is an example usage of pySim (can be used to program your first SIM):"
-    echo "./pySim-prog.py -p 0 -n YateBTS -c 1 -x 310 -y 260 -i 310260000000551 -s 8912600000000005512 -o 659BDA03311ACBBE767CB56D565A58D6 -k BA351F5C4690491D86377319E5A6DBCC"
+  cd $script_path
+  ./pysim_install.sh
 fi
 
 echo "== Installation has been completed successfully =="
