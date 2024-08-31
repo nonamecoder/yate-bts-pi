@@ -1,5 +1,7 @@
 ## Fine Tuning
 
+(Default tuning is ideal for Raspberry OS Lite without Desktop environment)
+
 Yate's architecture is designed to generate as many future TX bursts as possible until the TX FIFOs start blocking. Essentially, `RadioInterface::send()` is supposed to block until there is enough buffer room between `libusb->FX3->FPGA` to fit another 1024 sample buffer.
 
 Yate expects to generate a TX burst roughly 2 subframes before their RF transmission. To calculate how many samples 2 subframes correspond to, multiply the following:

@@ -4,11 +4,11 @@ Everything to build and run the latest Yate + YateBTS + bladeRF xA4 for an old G
 
 Yate 6.4.1 and YateBTS 6.1.1 use the latest bladeRF firmware and FPGA (tested with 2.4.0 and 0.15.3).
 
-## Tested Build Environment
+## Tested(recommended) Build Environment
 
 - **Raspberry Pi 5**
 - **bladeRF 2.0 micro xA4**
-- **Raspberry Pi OS Bookworm** (based on Debian 12 Bookworm), **GCC-11**, **Apache2**, **PHP 5.6** / **PHP 8.2**
+- **Raspberry Pi OS Bookworm (64-bit Lite)** (based on Debian 12 Bookworm), **GCC-11**, **Apache2**, **PHP 8.2 (backwards compatible with PHP 5.6)**
 
 ## Installation Instructions
 
@@ -31,7 +31,7 @@ Compilation takes approximately 10-15 minutes on a Raspberry Pi 5. The script wi
   telnet localhost 5038
   ```
 
-- **If Apache2 and PHP 5.6 were installed, access the NiPC web application:**
+- **If Apache2 and PHP were installed, access the NiPC web application:**
   ```
   http://{your_local_IP_or_name}/nipc/main.php
   ```
