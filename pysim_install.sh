@@ -4,12 +4,12 @@ sudo apt install -y --no-install-recommends pcscd libpcsclite-dev python3 python
 git clone https://github.com/osmocom/pysim.git
 cd ./pysim
 if [[ -z "$VIRTUAL_ENV" ]]; then
-  echo "No Python virtual environment is active."
-  python3 -m venv /home/briskspirit/.pyvenv
-  echo "source ~/.pyvenv/bin/activate" >> ~/.bashrc
-  source ~/.pyvenv/bin/activate
+    echo "No Python virtual environment is active."
+    python3 -m venv /home/briskspirit/.pyvenv
+    echo "source ~/.pyvenv/bin/activate" >> ~/.bashrc
+    source ~/.pyvenv/bin/activate
 else
-  echo "Python virtual environment is active: $VIRTUAL_ENV"
+    echo "Python virtual environment is active: $VIRTUAL_ENV"
 fi
 pip3 uninstall -y pycrypto
 pip3 install pycryptodome pyscard setuptools

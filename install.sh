@@ -2,8 +2,8 @@
 
 # Check if the script is being run as root (user ID 0)
 if [ "$(id -u)" -eq 0 ]; then
-  echo "This script must not be run as root. Please run it as a regular user."
-  exit 1
+    echo "This script must not be run as root. Please run it as a regular user."
+    exit 1
 fi
 
 # Set variables
@@ -21,8 +21,8 @@ sudo groupadd yate
 sudo usermod -a -G yate $username
 
 # Setup bladeRF udev rules
-echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee $rules_file
-echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee -a $rules_file
+echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"
+ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee $rules_file
 echo "Rules have been added to $rules_file"
 
 # Reload udev rules
@@ -65,24 +65,27 @@ sudo chown root:yate /usr/local/etc/yate/*.conf
 sudo chmod g+w /usr/local/etc/yate/*.conf
 
 # Set high exec priority for yate group
-echo "@yate hard nice -20" | sudo tee -a /etc/security/limits.conf
-echo "@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
+echo "@yate hard nice -20
+@yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
-# Install Yate web application
-read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP)? (y/n): " install_webapp
-if [[ "$install_webapp" =~ ^[Yy]$ ]]; then
-  sudo apt update
-  sudo apt install -y apache2 php
-  sudo chmod -R a+rw /usr/local/etc/yate/
-  sudo ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc
-  sudo service apache2 restart
-  echo "Apache2 and PHP have been installed successfully, and the NiPC web application has been set up."
+# Install Yateas a service
+read -p "Do you want to install the Yate as a service? (y/n): " service_install
+if [[ "$service_install" =~ ^[Yy]$ ]]; then
+    cd $script_path
+    ./service_install.sh
 fi
 
-read -p "Do you want to install pySim for SIM card programming? (y/n): " continue_pysim_install
-if [[ "$continue_pysim_install" =~ ^[Yy]$ ]]; then
-  cd $script_path
-  ./pysim_install.sh
+# Install Yate web application
+read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP)? (y/n): " nipc_install
+if [[ "$nipc_install" =~ ^[Yy]$ ]]; then
+    cd $script_path
+    ./nipc_install.sh
+fi
+
+read -p "Do you want to install pySim for SIM card programming? (y/n): " pysim_install
+if [[ "$pysim_install" =~ ^[Yy]$ ]]; then
+    cd $script_path
+    ./pysim_install.sh
 fi
 
 echo "== Installation has been completed successfully =="
