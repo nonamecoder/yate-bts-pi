@@ -21,7 +21,7 @@ sudo groupadd yate
 sudo usermod -a -G yate $username
 
 # Setup bladeRF udev rules
-echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee -a $rules_file
+echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"' | sudo tee $rules_file
 echo 'ATTR{idVendor}=="2cf0", ATTR{idProduct}=="5250", MODE="660", GROUP="yate"' | sudo tee -a $rules_file
 echo "Rules have been added to $rules_file"
 
