@@ -9,6 +9,7 @@ Yate 6.4.1 and YateBTS 6.1.1 use the latest bladeRF firmware and FPGA (tested wi
 - **Raspberry Pi 5**
 - **bladeRF 2.0 micro xA4**
 - **Raspberry Pi OS Bookworm (64-bit Lite)** (based on Debian 12 Bookworm), **GCC-11**, **Apache2**, **PHP 8.2 (backwards compatible with PHP 5.6)**
+> **_⚠️ WARNING:_ At least for Raspberry Pi 5 I do not recommend desktop image! Lite only as on desktop image IQ samples become negative in short time!**
 
 ## Installation Instructions
 
