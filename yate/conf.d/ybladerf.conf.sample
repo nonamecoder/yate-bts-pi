@@ -9,6 +9,18 @@
 ; serial: string: Optional device serial number to use when opening one
 ;serial=
 
+; Enable BT-100 wideband bias tee TX Power Amplifier (PA)
+; Boolean yes: Enable
+; Boolean no: disable
+; Defaults to boolean 'no' if missing or invalid
+tx_bias_tee=no
+
+; Enable BT-200 wideband bias-tee RX Low Noise Amplifier
+; Boolean yes: Enable
+; Boolean no: disable
+; Defaults to boolean 'no' if missing or invalid
+rx_bias_tee=no
+
 ; fpga_load: boolean: Load FPGA from file on device open
 ; Allowed values:
 ;  Boolean yes: Always load

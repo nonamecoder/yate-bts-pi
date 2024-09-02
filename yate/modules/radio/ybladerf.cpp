@@ -10401,6 +10401,27 @@ unsigned int BrfInterface::initialize(const NamedList& params)
 {
     int status;
 
+	Configuration cfg;
+	loadCfg(&cfg,false);
+	NamedList& gen = *cfg.createSection(YSTRING("general"));
+
+	// Enable RX and TX bias tee from config
+	if (gen.getBoolValue(YSTRING("tx_bias_tee"),false)) {
+		status = bladerf_set_bias_tee((struct bladerf*)lb_dev, BLADERF_CHANNEL_TX(0), true);
+		if (status != 0) {
+			Debug(this,DebugAll,"Could not enable TX bias tee [%p]",this);
+			return 1;
+		}
+	}
+
+	if (gen.getBoolValue(YSTRING("rx_bias_tee"),false)) {
+		status = bladerf_set_bias_tee((struct bladerf*)lb_dev, BLADERF_CHANNEL_RX(0), true);
+		if (status != 0) {
+			Debug(this,DebugAll,"Could not enable RX bias tee [%p]",this);
+			return 1;
+		}
+	}
+
     status = bladerf_sync_config((struct bladerf*)lb_dev, BLADERF_RX_X1, BLADERF_FORMAT_SC16_Q11_META,
                     4096, // num buffers
                     4096, // buffer size
