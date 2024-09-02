@@ -68,9 +68,6 @@ routing=welcome.js
 ; The Eliza chat bot, enabled by default for your enjoyment in rmanager
 eliza=eliza.js
 
-; NiPC local routing script
-nipc=nipc.js
-
 
 [late_scripts]
 ; Add one entry in this section for each script that is to be loaded after Yate startup

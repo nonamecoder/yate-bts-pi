@@ -57,7 +57,7 @@
 ;  (and single) parameter
 
 ; Authentication script for SIM cards
-gsm_auth.sh=
+;gsm_auth.sh=
 
 
 [execute]
