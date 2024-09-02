@@ -4,7 +4,20 @@ Everything to build and run the latest Yate + YateBTS + bladeRF xA4 for an old G
 
 Yate 6.4.1 and YateBTS 6.1.1 use the latest bladeRF firmware and FPGA (tested with 2.4.0 and 0.15.3).
 
-## Tested(recommended) Build Environment
+## Bias Tee Support
+
+The YateBTS now supports bias tee for both TX (bladeRF BT-100) and RX (bladeRF BT-200).
+To enable this feature, update the following settings in `/usr/local/etc/yate/ybladerf.conf`:
+- `tx_bias_tee=`: Set to `yes` to enable TX bias tee.
+- `rx_bias_tee=`: Set to `yes` to enable RX bias tee.
+
+## Documentation Links
+
+For more detailed tuning and configuration guidance, refer to the following documentation:
+- [ARFCN Tuning Guide](arfcn_tune.md)
+- [Advanced Tuning Guide](advanced_tune.md)
+
+## Tested (recommended) Build Environment
 
 - **Raspberry Pi 5**
 - **bladeRF 2.0 micro xA4**

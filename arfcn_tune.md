@@ -1,5 +1,7 @@
 # Manual for Fine-Tuning ARFCN in YateBTS
 
+**Note:** There is a Python script called `tune_arfcn.py` that can be run to automatically tune ARFCN based on current RF conditions.
+
 Fine-tuning the ARFCN (Absolute Radio Frequency Channel Number) for YateBTS involves scanning and selecting the optimal frequency to ensure minimal interference and optimal signal quality. Below is a step-by-step guide to using the commands you've mentioned:
 
 ## Step-by-Step Guide
