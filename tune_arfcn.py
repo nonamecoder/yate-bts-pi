@@ -1,6 +1,7 @@
 import re
 import asyncio
 import subprocess
+from pylibs.update_cfg import update_config_file
 
 
 HOST = "localhost"
@@ -33,34 +34,6 @@ def parse_scan_report(output):
         frequency_mhz = float(match[2])
         arfcn_list.append((arfcn, noise_db, frequency_mhz))
     return arfcn_list
-
-def update_config_file(best_arfcn):
-    try:
-        with open(CONFIG_FILE_PATH, 'r') as file:
-            lines = file.readlines()
-
-        # Prepare to update the Radio.C0 line
-        pattern = re.compile(r'^\s*Radio\.C0\s*=\s*\d+', re.IGNORECASE)
-        updated = False
-
-        with open(CONFIG_FILE_PATH, 'w') as file:
-            for line in lines:
-                if pattern.match(line):
-                    file.write(f"Radio.C0={best_arfcn}\n")
-                    updated = True
-                else:
-                    file.write(line)
-
-            if not updated:
-                # If Radio.C0 is not found, add it at the end of the file
-                print("Radio.C0 not found in configuration file. Adding it at the end.")
-                file.write(f"\nRadio.C0={best_arfcn}\n")
-
-        print(f"Updated Radio.C0 to {best_arfcn} in {CONFIG_FILE_PATH}")
-        print("Restart Yate service to apply the changes.")
-
-    except Exception as e:
-        print(f"Failed to update configuration file: {e}")
 
 async def send_command(reader, writer, command):
     writer.write(command.encode('utf-8') + b"\n")
@@ -102,7 +75,7 @@ async def telnet_session():
                 if arfcn_list:
                     print("Updating configuration file with the best ARFCN...")
                     best_arfcn = arfcn_list[0][0]  # Best ARFCN is the first in the list
-                    update_config_file(best_arfcn)
+                    update_config_file(CONFIG_FILE_PATH, "Radio.C0", best_arfcn)
                 else:
                     print("No ARFCN found in the scan report.")
                     print("Scan failed, please try again in a few seconds, radio wasn't ready.")
