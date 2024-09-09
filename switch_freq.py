@@ -49,8 +49,8 @@ def configure_yatebts():
 
     # Update the configuration file
     print(f"Setting Radio.Band={frequency} and Radio.C0={arfcn}")
-    update_config_file('Radio.Band', frequency)
-    update_config_file('Radio.C0', arfcn)
+    update_config_file(CONFIG_FILE_PATH, 'Radio.Band', frequency)
+    update_config_file(CONFIG_FILE_PATH, 'Radio.C0', arfcn)
 
     # Restart the yatebts service if available
     restart_service('yatebts.service')
