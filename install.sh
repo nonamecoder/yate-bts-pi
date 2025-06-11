@@ -85,17 +85,10 @@ if [[ "$nipc_install" =~ ^[Yy]$ ]]; then
     ./nipc_install.sh
 fi
 
-read -p "Do you want to install pySim for SIM card programming? (y/n): " pysim_install
-if [[ "$pysim_install" =~ ^[Yy]$ ]]; then
-    cd $script_path
-    ./pysim_install.sh
-fi
-
 echo "== Installation has been completed successfully =="
 echo "David's phone number for audio and echo test is 32843."
 echo "Also, try to send an SMS to the Eliza chatbot at 35492."
 echo "To telnet to the YateBTS, use the following command: telnet localhost 5038."
 echo "To start the Yate service, use the following command: sudo yate -s."
 echo "Base configuration is set for the 1900 MHz band, MCC=310, MNC=260. IMSI regex starts with 310260."
-echo "If you flashed the SIM with the pySim example, your assigned phone number is 10000551."
 echo "If you installed Apache2 and PHP 5.6, you can access the NiPC web application at http://{your_local_IP_or_name}/nipc/main.php."
