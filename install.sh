@@ -14,11 +14,14 @@ install_prefix="/usr/local"
 
 # Install dependencies
 sudo apt update
-sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet
+sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurses5-dev libtecla1 libtecla-dev pkg-config git wget libgsm1-dev autoconf telnet bladerf libbladerf-dev
 
 # Setup yate group
-sudo groupadd yate
+sudo groupadd yate 2>/dev/null || echo "Group 'yate' already exists"
 sudo usermod -a -G yate $username
+
+# Activate new group membership for current session
+exec sg yate -c "$0 $*" 2>/dev/null || echo "Continuing with existing group membership..."
 
 # Setup bladeRF udev rules
 echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"
@@ -29,16 +32,17 @@ echo "Rules have been added to $rules_file"
 sudo udevadm control --reload-rules && sudo udevadm trigger
 echo "udev rules reloaded successfully."
 
-# Install bladeRF
-cd $script_path
-git clone https://github.com/Nuand/bladeRF.git ./bladeRF
-cd bladeRF/host/
-mkdir -p build
-cd build/
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
-make -j$(nproc)
-sudo make install
-sudo ldconfig
+# Install bladeRF (skipping source build since we installed from apt)
+
+# cd $script_path
+# git clone https://github.com/Nuand/bladeRF.git ./bladeRF
+# cd bladeRF/host/
+# mkdir -p build
+# cd build/
+# cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DBLADERF_GROUP=yate ../
+# make -j$(nproc)
+# sudo make install
+# sudo ldconfig
 
 # Update bladeRF firmware and FPGA
 # *(0.15.3 and 2.4.0 are tested)*
