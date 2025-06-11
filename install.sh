@@ -20,8 +20,7 @@ sudo apt install -y libusb-1.0-0-dev libusb-1.0-0 build-essential cmake libncurs
 sudo groupadd yate 2>/dev/null || echo "Group 'yate' already exists"
 sudo usermod -a -G yate $username
 
-# Activate new group membership for current session
-exec sg yate -c "$0 $*" 2>/dev/null || echo "Continuing with existing group membership..."
+# Note: New group membership will be active after logout/login or for new shell sessions
 
 # Setup bladeRF udev rules
 echo 'ATTR{idVendor}=="1d50", ATTR{idProduct}=="6066", MODE="660", GROUP="yate"
